@@ -1099,7 +1099,7 @@
 							"hideMethod": "fadeOut"
 						};
 				
-						toastr.info("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
+						//toastr.info("You have been awarded with 1 year free subscription. Enjoy it!", "Account Subcription Updated", opts);
 					}, 3000);
 					
 					// Charts
@@ -1550,10 +1550,7 @@
 							prefix : '' ,
 							suffix : 'KM/H' 
 						},
-						cntr = new countUp($el[0], 0, <?php 
-								$speedFloat=50;
-								echo $speedFloat; 
-								?>, 2, 1.5, options);
+						cntr = new countUp($el[0], 0, <?php $carData = new carData();$result=$carData->__request(); $speedFloat=$result['noiselevel']; echo $speedFloat;?>, 2, 1.5, options);
 						
 					cntr.start();
 				}
@@ -1575,8 +1572,10 @@
 						</div>
 						<div class="xe-label">
 							<strong class="num"><?php 
-								$speed="50 KM/H";
-								echo $speed; 
+								$carData = new carData();
+								$result=$carData->__request();
+								$speedFloat=$result['noiselevel'];
+								echo $speedFloat;
 								?></strong>
 							<span>Now Speed</span>
 						</div>
@@ -1587,7 +1586,17 @@
 							<i class="linecons-user"></i>
 						</div>
 						<div class="xe-label">
-							<strong class="num"><?php $Condition="Well"; echo $Condition; ?></strong>
+							<strong class="num">
+							<?php 
+							$carData = new carData();
+							$result=$carData->__request();
+							$Condition="Unused";
+							if($speedFloat>=30 and $speedFloat<=60)
+								$Condition="Well";
+							else if($speedFloat>60)
+								$Condition="Overspeed";
+							 echo $Condition; ?>
+							</strong>
 							<span>Car Condition</span>
 						</div>
 					</div>
@@ -1597,7 +1606,12 @@
 							<i class="linecons-camera"></i>
 						</div>
 						<div class="xe-label">
-							<strong class="num"><?php $direction="东南(南偏北19°)"; echo $direction; ?></strong>
+							<strong class="num">
+							<?php 
+							$carData = new carData();
+							$result=$carData->__request();
+							//$direction=$result['direction'];
+							$direction="东南(南偏北19°)"; echo $direction; ?></strong>
 							<span>Direction</span>
 						</div>
 					</div>
@@ -1682,7 +1696,12 @@
 					
 					<div class="chart-item-bg">
 						<div class="chart-label chart-label-small">
-							<div class="h4 text-purple text-bold" data-count="this" data-from="0.00" data-to="95.8" data-suffix="%" data-duration="1.5"><?php $temperature="32.0℃"; echo $temperature;?></div>
+							<div class="h4 text-purple text-bold" data-count="this" data-from="0.00" data-to="95.8" data-suffix="%" data-duration="1.5">
+							  <?php $carData = new carData();
+									$result=$carData->__request();
+								    $temperature=$result['temperature']; 
+								    echo $temperature;?>
+							</div>
 							<span class="text-small text-upper text-muted">Current Temperature</span>
 						</div>
 						<div id="server-uptime-chart" style="height: 134px;"></div>
@@ -1690,7 +1709,9 @@
 					
 					<div class="chart-item-bg">
 						<div class="chart-label chart-label-small">
-							<div class="h4 text-secondary text-bold" data-count="this" data-from="0.00" data-to="320.45" data-decimal="," data-duration="2"><?php $humidity="36.7"; echo $humidity;?></div>
+							<div class="h4 text-secondary text-bold" data-count="this" data-from="0.00" data-to="320.45" data-decimal="," data-duration="2">
+							<?php $carData = new carData();
+								$result=$carData->__request();$humidity=$result['humidity']; echo $humidity;?></div>
 							<span class="text-small text-upper text-muted">Current Humidity</span>
 						</div>
 						<div id="sales-avg-chart" style="height: 134px; position: relative;">
@@ -1707,8 +1728,8 @@
 					
 					<div class="chart-item-bg">
 						<div class="chart-label">
-							<div id="network-mbs-packets" class="h1 text-purple text-bold" data-count="this" data-from="0.00" data-to="21.05" data-suffix="mb/s" data-duration="1">0.00mb/s</div>
-							<span class="text-small text-muted text-upper">Download Speed</span>
+							<div id="network-mbs-packets" class="h1 text-purple text-bold" data-count="this" data-from="0.00" data-to="21.05" data-suffix="mb/s" data-duration="1">0.00KM/H</div>
+							<span class="text-small text-muted text-upper">Instant Speed</span>
 						</div>
 						<div class="chart-right-legend">
 							<div id="network-realtime-gauge" style="width: 170px; height: 140px"></div>
@@ -1721,7 +1742,7 @@
 							<div id="network-mbs-packets" class="h1 text-secondary text-bold" data-count="this" data-from="0.00" data-to="67.35" data-suffix="%" data-duration="1.5"><?$oilRemaining="89.9%"; echo $oilRemaining; ?></div>
 							<span class="text-small text-muted text-upper">OIL REMAINING</span>
 							
-							<p class="text-medium" style="width: 50%; margin-top: 10px">Sentiments two occasional affronting solicitude travelling and one contrasted. Fortune day out married parties.</p>
+							<p class="text-medium" style="width: 50%; margin-top: 10px">So it shows you many percentage oil you have in your car now.</p>
 						</div>
 						<div id="other-stats" style="min-height: 183px">
 							<div id="cpu-usage-gauge" style="width: 170px; height: 140px; position: absolute; right: 20px; top: 20px"></div>
@@ -1929,7 +1950,19 @@
 		
 	</div>
 	
-	
+	<?php 
+		//echo "系统当前时间戳为：";
+		//echo "";
+		echo time();
+		//<!--JS 页面自动刷新 -->
+		echo ("<script type=\"text/javascript\">");
+		echo ("function fresh_page()");    
+		echo ("{");
+		echo ("window.location.reload('index.php');");
+		echo ("}"); 
+		echo ("setTimeout('fresh_page()',5000);");      
+		echo ("</script>");
+	?>
 	<!--如果恢复会一直delay()-->
 	<!--<div class="page-loading-overlay">
 		<div class="loader-2"></div>
@@ -1956,6 +1989,6 @@
 
 	<!-- JavaScripts initializations and stuff -->
 	<!--<script src="assets/js/xenon-custom.js"></script>-->
-
+	
 </body>
 </html>
