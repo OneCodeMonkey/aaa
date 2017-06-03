@@ -21,17 +21,29 @@
 	<link rel="stylesheet" href="assets/css/custom.css">
 
 	<script src="assets/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/echarts.js"></script>
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
-	
+	<style>
+		#zhexian{
+
+             float:left;position:relative;width:100%;height:340px;background-color:#eee;
+         }
+	</style>
 	
 </head>
 <body class="page-body">
-
+	<?php include 'inc/request.php';  //引入天气请求类
+		header('Content-type:text/html;charset=utf-8');
+		// $carData = new carData();
+		// $result=$carData->__request();
+		// var_dump($result);
+	?>
 	<div class="settings-pane">
 			
 		<a href="#" data-toggle="settings-pane" data-animate="true">
@@ -1101,7 +1113,7 @@
 						{ id: ++i, part1: 5, part2: 3 },
 						{ id: ++i, part1: 4, part2: 2 },
 						{ id: ++i, part1: 3, part2: 1 },
-						{ id: ++i, part1: 3, part2: 2 },
+						{ id: ++i, part1: 3, part2SERV: 2 },
 						{ id: ++i, part1: 5, part2: 3 },
 						{ id: ++i, part1: 7, part2: 4 },
 						{ id: ++i, part1: 9, part2: 5 },
@@ -1536,9 +1548,12 @@
 							separator : ',', 
 							decimal : '.', 
 							prefix : '' ,
-							suffix : 'mb/s' 
+							suffix : 'KM/H' 
 						},
-						cntr = new countUp($el[0], parseFloat($el.text().replace('mb/s')), parseFloat(between(10,25) + 1/between(15,30)), 2, 1.5, options);
+						cntr = new countUp($el[0], 0, <?php 
+								$speedFloat=50;
+								echo $speedFloat; 
+								?>, 2, 1.5, options);
 						
 					cntr.start();
 				}
@@ -1554,13 +1569,16 @@
 			<div class="row">
 				<div class="col-sm-3">
 					
-					<div class="xe-widget xe-counter" data-count=".num" data-from="0" data-to="99.9" data-suffix="%" data-duration="2">
+					<div class="xe-widget xe-counter" data-count=".num" data-from="0" data-to="49.9" data-suffix="%" data-duration="2">
 						<div class="xe-icon">
 							<i class="linecons-cloud"></i>
 						</div>
 						<div class="xe-label">
-							<strong class="num">0.0%</strong>
-							<span>Server uptime</span>
+							<strong class="num"><?php 
+								$speed="50 KM/H";
+								echo $speed; 
+								?></strong>
+							<span>Now Speed</span>
 						</div>
 					</div>
 					
@@ -1569,8 +1587,8 @@
 							<i class="linecons-user"></i>
 						</div>
 						<div class="xe-label">
-							<strong class="num">1k</strong>
-							<span>Users Total</span>
+							<strong class="num"><?php $Condition="Well"; echo $Condition; ?></strong>
+							<span>Car Condition</span>
 						</div>
 					</div>
 					
@@ -1579,37 +1597,101 @@
 							<i class="linecons-camera"></i>
 						</div>
 						<div class="xe-label">
-							<strong class="num">1000</strong>
-							<span>New Daily Photos</span>
+							<strong class="num"><?php $direction="东南(南偏北19°)"; echo $direction; ?></strong>
+							<span>Direction</span>
 						</div>
 					</div>
 					
 				</div>
 				<div class="col-sm-6">
 					
-					<div class="chart-item-bg">
+					<!-- <div class="chart-item-bg">
 						<div class="chart-label">
 							<div class="h3 text-secondary text-bold" data-count="this" data-from="0.00" data-to="14.85" data-suffix="%" data-duration="1">0.00%</div>
 							<span class="text-medium text-muted">More visitors</span>
 						</div>
 						<div id="pageviews-visitors-chart" style="height: 298px;"></div>
-					</div>
-					
+					</div> -->
+					<!-- 速度统计界面 -->
+					<div id="zhexian" style="">
+    
+   					 </div>
+   					 <!--折线图js-->
+					<script>
+					     var myCharts1 = echarts.init(document.getElementById('zhexian'));
+					     var option1 = {
+					    title : {
+					        text: 'Speed Statistics',
+					        subtext: 'Collect Per Hour'
+					    },
+					    tooltip : {
+					        trigger: 'axis'
+					    },
+					    legend: {
+					        data:['速度',]
+					    },
+					    toolbox: {
+					        show : true,
+					        feature : {
+					            mark : {show: true},
+					            dataView : {show: true, readOnly: false},
+					            magicType : {show: true, type: ['line', 'bar']},
+					            restore : {show: true},
+					            saveAsImage : {show: true}
+					        }
+					    },
+					    calculable : true,
+					    xAxis : [
+					        {
+					            type : 'category',
+					            boundaryGap : false,
+					            data : ['0','5','10','15','20','25','30','35','40','45','50','55','60']
+					        }
+					    ],
+					    yAxis : [
+					        {
+					            type : 'value',
+					            axisLabel : {
+					                formatter: '{value} km/h'
+					            }
+					        }
+					    ],
+					    series : [
+					        {
+					            name:'Speed',
+					            type:'line',
+					            data:[0, 1, 5, 15,25, 35, 45, 55, 60,65,75,60,40],
+					            markPoint : {
+					                data : [
+					                    {type : 'max', name: '最大值'},
+					                    {type : 'min', name: '最小值'}
+					                ]
+					            },
+					            markLine : {
+					                data : [
+					                    {type : 'average', name: '平均值'}
+					                ]
+					            }
+					        }
+					    ]
+					};
+					     myCharts1.setOption(option1);
+					 </script>
 				</div>
 				<div class="col-sm-3">
 					
 					<div class="chart-item-bg">
 						<div class="chart-label chart-label-small">
-							<div class="h4 text-purple text-bold" data-count="this" data-from="0.00" data-to="95.8" data-suffix="%" data-duration="1.5">0.00%</div>
-							<span class="text-small text-upper text-muted">Current Server Uptime</span>
+							<div class="h4 text-purple text-bold" data-count="this" data-from="0.00" data-to="95.8" data-suffix="%" data-duration="1.5"><?php $temperature="32.0℃"; echo $temperature;?></div>
+							<span class="text-small text-upper text-muted">Current Temperature</span>
 						</div>
 						<div id="server-uptime-chart" style="height: 134px;"></div>
 					</div>
 					
 					<div class="chart-item-bg">
 						<div class="chart-label chart-label-small">
-							<div class="h4 text-secondary text-bold" data-count="this" data-from="0.00" data-to="320.45" data-decimal="," data-duration="2">0</div>
-							<span class="text-small text-upper text-muted">Avg. of Sales</span>
+							<div class="h4 text-secondary text-bold" data-count="this" data-from="0.00" data-to="320.45" data-decimal="," data-duration="2"><?php $humidity="36.7"; echo $humidity;?></div>
+							<span class="text-small text-upper text-muted">Current Humidity</span>
 						</div>
 						<div id="sales-avg-chart" style="height: 134px; position: relative;">
 							<div style="position: absolute; top: 25px; right: 0; left: 40%; bottom: 0"></div>
@@ -1621,6 +1703,32 @@
 			
 			
 			<div class="row">
+			    <div class="col-sm-6">
+					
+					<div class="chart-item-bg">
+						<div class="chart-label">
+							<div id="network-mbs-packets" class="h1 text-purple text-bold" data-count="this" data-from="0.00" data-to="21.05" data-suffix="mb/s" data-duration="1">0.00mb/s</div>
+							<span class="text-small text-muted text-upper">Download Speed</span>
+						</div>
+						<div class="chart-right-legend">
+							<div id="network-realtime-gauge" style="width: 170px; height: 140px"></div>
+						</div>
+						<div id="realtime-network-stats" style="height: 320px"></div>
+					</div>
+					
+					<div class="chart-item-bg">
+						<div class="chart-label">
+							<div id="network-mbs-packets" class="h1 text-secondary text-bold" data-count="this" data-from="0.00" data-to="67.35" data-suffix="%" data-duration="1.5"><?$oilRemaining="89.9%"; echo $oilRemaining; ?></div>
+							<span class="text-small text-muted text-upper">OIL REMAINING</span>
+							
+							<p class="text-medium" style="width: 50%; margin-top: 10px">Sentiments two occasional affronting solicitude travelling and one contrasted. Fortune day out married parties.</p>
+						</div>
+						<div id="other-stats" style="min-height: 183px">
+							<div id="cpu-usage-gauge" style="width: 170px; height: 140px; position: absolute; right: 20px; top: 20px"></div>
+						</div>
+					</div>
+					
+				</div>
 				<div class="col-sm-6">
 					
 					<div class="chart-item-bg">
@@ -1655,32 +1763,7 @@
 					</div>
 					
 				</div>
-				<div class="col-sm-6">
-					
-					<div class="chart-item-bg">
-						<div class="chart-label">
-							<div id="network-mbs-packets" class="h1 text-purple text-bold" data-count="this" data-from="0.00" data-to="21.05" data-suffix="mb/s" data-duration="1">0.00mb/s</div>
-							<span class="text-small text-muted text-upper">Download Speed</span>
-						</div>
-						<div class="chart-right-legend">
-							<div id="network-realtime-gauge" style="width: 170px; height: 140px"></div>
-						</div>
-						<div id="realtime-network-stats" style="height: 320px"></div>
-					</div>
-					
-					<div class="chart-item-bg">
-						<div class="chart-label">
-							<div id="network-mbs-packets" class="h1 text-secondary text-bold" data-count="this" data-from="0.00" data-to="67.35" data-suffix="%" data-duration="1.5">0.00%</div>
-							<span class="text-small text-muted text-upper">CPU Usage</span>
-							
-							<p class="text-medium" style="width: 50%; margin-top: 10px">Sentiments two occasional affronting solicitude travelling and one contrasted. Fortune day out married parties.</p>
-						</div>
-						<div id="other-stats" style="min-height: 183px">
-							<div id="cpu-usage-gauge" style="width: 170px; height: 140px; position: absolute; right: 20px; top: 20px"></div>
-						</div>
-					</div>
-					
-				</div>
+				
 			</div>
 			
 			
@@ -1847,9 +1930,10 @@
 	</div>
 	
 	
-	<div class="page-loading-overlay">
+	<!--如果恢复会一直delay()-->
+	<!--<div class="page-loading-overlay">
 		<div class="loader-2"></div>
-	</div>
+	</div>-->
 	
 
 
@@ -1859,8 +1943,8 @@
 	<script src="assets/js/TweenMax.min.js"></script>
 	<script src="assets/js/resizeable.js"></script>
 	<script src="assets/js/joinable.js"></script>
-	<script src="assets/js/xenon-api.js"></script>
-	<script src="assets/js/xenon-toggles.js"></script>
+	<!--<script src="assets/js/xenon-api.js"></script>-->
+	<!--<script src="assets/js/xenon-toggles.js"></script>-->
 
 
 	<!-- Imported scripts on this page -->
@@ -1871,7 +1955,7 @@
 
 
 	<!-- JavaScripts initializations and stuff -->
-	<script src="assets/js/xenon-custom.js"></script>
+	<!--<script src="assets/js/xenon-custom.js"></script>-->
 
 </body>
 </html>
