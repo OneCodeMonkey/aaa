@@ -23,6 +23,7 @@
 	<script src="assets/js/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/echarts.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=n9CM1kazCd0mUmbwD25Y6OhZKgtlqteG"></script>
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -34,6 +35,9 @@
 
              float:left;position:relative;width:100%;height:340px;background-color:#eee;
          }
+        #container01{
+        	width:608px;height:528px;
+        } 
 	</style>
 	
 </head>
@@ -1752,7 +1756,23 @@
 				</div>
 				<div class="col-sm-6">
 					
-					<div class="chart-item-bg">
+					<!-- map -->		
+					<div class="container01">
+						<div id="container01"></div>
+					</div>
+
+					
+
+					<!-- map -->
+					<script type="text/javascript"> 
+						var map = new BMap.Map("container01");          // 创建地图实例  
+						var point = new BMap.Point(121.322565,31.201673);  // 创建点坐标  
+						map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别  
+						var marker = new BMap.Marker(point);        // 创建标注    
+						map.addOverlay(marker);                     // 将标注添加到地图中
+
+					</script>  		
+					<!-- <div class="chart-item-bg">
 						<div id="pageviews-stats" style="height: 320px; padding: 20px 0;"></div>
 						
 						<div class="chart-entry-view">
@@ -1781,7 +1801,8 @@
 								<div class="sparkline third-month"></div>
 							</div>
 						</div>
-					</div>
+					</div> -->
+
 					
 				</div>
 				
@@ -1953,7 +1974,7 @@
 	<?php 
 		//echo "系统当前时间戳为：";
 		//echo "";
-		echo time();
+		//echo time();
 		//<!--JS 页面自动刷新 -->
 		echo ("<script type=\"text/javascript\">");
 		echo ("function fresh_page()");    
