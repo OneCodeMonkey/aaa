@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<meta charset="utf8"/>
+		<title>WeDrive,the sharing car leader</title>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=n9CM1kazCd0mUmbwD25Y6OhZKgtlqteG"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<style type="text/css">  
+			html{height:100%}  
+			body{height:100%;margin:0px;padding:0px}  
+			#container{margin-left:10%;margin-right:10%;margin-top:30px;position:fixed;height:80%;width:80%;}  
+			#buttonGroup{
+				margin-left:40%;margin-right:30%;
+				margin-top:30px;
+				float:left;
+			}
+			#buttonRecate{p
+
+			}
+			#buttonLender{
+				display: inline-block;margin-right:100px;
+
+			}
+			#buttonRenter{
+				display: inline-block;
+			}
+			#buttonRelocate{
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="buttonGroup">
+			<button type="button" id="buttonLender" class="btn btn-info btn-lg">Sharing</button>
+		</div>
+		<div id="relocate">
+			<button type="button" id="buttonLender" class="btn btn-info btn-lg">Relocation</button>
+		</div>
+		<div id="container"></div>
+		<div id="app01">
+			<?php echo 'awera wer awe awe '; ?>	
+
+		</div>
+
+		
+		<script type="text/javascript" src="js/vue.js"></script>
+
+
+
+		<!-- map -->
+		<script type="text/javascript"> 
+			var map = new BMap.Map("container");          // 创建地图实例  
+			var point = new BMap.Point(121.322565,31.201673);  // 创建点坐标  
+			map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别  
+		</script>  
+	</body>
+</html>
