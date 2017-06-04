@@ -34,12 +34,12 @@
 				if (r==true)
 				  {
 				  alert("Congratulations! You can shared your car!");
-				  self.location='/start.php'; 
+				  self.location='/12Ride_ROOT/start.php'; 
 				  }
 				else
 				  {
 				  alert("You have canceled the sharing! ");
-				  self.location='/index.php';
+				  self.location='/12Ride_ROOT/index.php';
 				  }
 			}
 			function show_confirm(){
@@ -47,18 +47,18 @@
 				if (r==true)
 				  {
 				  alert("Congratulations! Your Position has been renewed!");
-				  self.location='/index.php'; 
+				  self.location='/12Ride_ROOT/index.php'; 
 				  }
 				else
 				  {
-				  self.location='/index.php';
+				  self.location='/12Ride_ROOT/index.php';
 				  }
 			}
 		</script>
 		<?php 
-		include_once 'inc/config.inc.php';
-			include_once 'inc/mysql.inc.php';
-			include_once 'inc/tool.inc.php';
+		include_once '/12Ride_ROOT/inc/config.inc.php';
+			include_once '/12Ride_ROOT/inc/mysql.inc.php';
+			include_once '/12Ride_ROOT/inc/tool.inc.php';
 		?>
 	</head>
 	<body>	
@@ -85,8 +85,8 @@
 					    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					      <ul class="nav navbar-nav">
 					        <li class="active"><a href="#">About <span class="sr-only">(current)</span></a></li>
-					        <li><a href="/start.php">Start</a></li>
-					        <li><a href="/sharingPage.php">Sharing</a></li>
+					        <li><a href="/12Ride_ROOT/start.php">Start</a></li>
+					        <li><a href="/12Ride_ROOT/sharingPage.php">Sharing</a></li>
 					        <li class="dropdown">
 					          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Detail <span class="caret"></span></a>
 					          <ul class="dropdown-menu">
@@ -155,7 +155,7 @@
 				  </div>
 				  
 				  <label>验证码：<input name="vcode" name="vocode" type="text"  /><span>*请输入下方验证码</span></label>
-			<img class="vcode" src="/resources/images/yanzheng.JPG" />
+			<img class="vcode" src="/12Ride_ROOT/resources/images/yanzheng.JPG" />
 				  <div>&nbsp;</div>
 				  
 				  <button onclick="show_confirm2()" type="submit" style="display:inline;" class="btn btn-lg btn-info ">Sharing</button>

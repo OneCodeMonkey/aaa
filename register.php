@@ -32,15 +32,15 @@
 			function show_confirm2(){
 				
 				alert("Congratulations! You have registed,start your sharing trip now!");
-				self.location='/start.php';
+				self.location='/12Ride_ROOT/start.php';
 				
 			}
 		</script>	
 
 		<?php 
-		include_once 'inc/config.inc.php';
-			include_once 'inc/mysql.inc.php';
-			include_once 'inc/tool.inc.php';
+		include_once '/12Ride_ROOT/inc/config.inc.php';
+			include_once '/12Ride_ROOT/inc/mysql.inc.php';
+			include_once '/12Ride_ROOT/inc/tool.inc.php';
 		?>
 	</head>
 	<body>	
@@ -60,15 +60,15 @@
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
 					      </button>
-					      <a class="navbar-brand" href="/index.php"><img id="logo" src="resources/images/Logo.jpg"></a>
+					      <a class="navbar-brand" href="/12Ride_ROOT/index.php"><img id="logo" src="/12Ride_ROOT/resources/images/Logo.jpg"></a>
 					    </div>
 
 					    <!-- Collect the nav links, forms, and other content for toggling -->
 					    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					      <ul class="nav navbar-nav">
 					        <li class="active"><a href="#">About <span class="sr-only">(current)</span></a></li>
-					        <li><a href="/start.php">Start</a></li>
-					        <li><a href="/sharingPage.php">Sharing</a></li>
+					        <li><a href="/12Ride_ROOT/start.php">Start</a></li>
+					        <li><a href="/12Ride_ROOT/sharingPage.php">Sharing</a></li>
 					        <li class="dropdown">
 					          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Detail <span class="caret"></span></a>
 					          <ul class="dropdown-menu">

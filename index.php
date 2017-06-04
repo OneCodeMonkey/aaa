@@ -31,11 +31,11 @@
 				if (r==true)
 				  {
 				  alert("Congratulations! Your Position has been renewed!");
-				  self.location='/index.php'; 
+				  self.location='/12Ride_ROOT/index.php'; 
 				  }
 				else
 				  {
-				  self.location='/index.php';
+				  self.location='/12Ride_ROOT/index.php';
 				  }
 			}
 		</script>
@@ -59,15 +59,15 @@
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
 					      </button>
-					      <a class="navbar-brand" href="/index.php"><img id="logo" src="resources/images/Logo.jpg"></a>
+					      <a class="navbar-brand" href="/index.php"><img id="logo" src="/12Ride_ROOT/resources/images/Logo.jpg"></a>
 					    </div>
 
 					    <!-- Collect the nav links, forms, and other content for toggling -->
 					    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					      <ul class="nav navbar-nav">
 					        <li class="active"><a href="#">About <span class="sr-only">(current)</span></a></li>
-					        <li><a href="/start.php">Start</a></li>
-					        <li><a href="/sharingPage.php">Sharing</a></li>
+					        <li><a href="/12Ride_ROOT/start.php">Start</a></li>
+					        <li><a href="/12Ride_ROOT/sharingPage.php">Sharing</a></li>
 					        <li class="dropdown">
 					          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Detail <span class="caret"></span></a>
 					          <ul class="dropdown-menu">
@@ -123,7 +123,7 @@
 			<div id="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					
-					<a href="/start.php"><img src="resources/images/background.png" style="width:100%;height:100%;position:relative;top:-18px;"></a>
+					<a href="/12Ride_ROOT/start.php"><img src="/12Ride_ROOT/resources/images/background.png" style="width:100%;height:100%;position:relative;top:-18px;"></a>
 				</div>
 
 			</div>

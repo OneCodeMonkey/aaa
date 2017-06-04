@@ -35,12 +35,12 @@
 				  {
 				  alert("Congratulations! You can use the car now!");
 				  //self.location='http://42.159.133.122:8082/azure/boschxdk27/1';
-				  self.location='/admin/index.php'; 
+				  self.location='/12Ride_ROOT/admin/index.php'; 
 				  }
 				else
 				  {
 				  alert("You have canceled the renting! See more cars which can be used! ");
-				  self.location='/start.php';
+				  self.location='/12Ride_ROOT/start.php';
 				  }
 			}
 			function show_confirm2(){
@@ -49,18 +49,18 @@
 				  {
 				  alert("Congratulations! Your Position has been renewed!");
 				  self
-				  self.location='/index.php'; 
+				  self.location='/12Ride_ROOT/index.php'; 
 				  }
 				else
 				  {
-				  self.location='/index.php';
+				  self.location='/12Ride_ROOT/index.php';
 				  }
 			}
 		</script>
 		<?php 
-		include_once 'inc/config.inc.php';
-			include_once 'inc/mysql.inc.php';
-			include_once 'inc/tool.inc.php';
+		include_once '/12Ride_ROOT/inc/config.inc.php';
+			include_once '/12Ride_ROOT/inc/mysql.inc.php';
+			include_once '/12Ride_ROOT/inc/tool.inc.php';
 		?>
 	</head>
 	<body>	
@@ -89,15 +89,15 @@ A;
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
 					      </button>
-					      <a class="navbar-brand" href="/index.php"><img id="logo" src="resources/images/Logo.jpg"></a>
+					      <a class="navbar-brand" href="/12Ride_ROOT/index.php"><img id="logo" src="/12Ride_ROOT/resources/images/Logo.jpg"></a>
 					    </div>
 
 					    <!-- Collect the nav links, forms, and other content for toggling -->
 					    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					      <ul class="nav navbar-nav">
 					        <li class="active"><a href="#">About <span class="sr-only">(current)</span></a></li>
-					        <li><a href="/start.php">Start</a></li>
-					        <li><a href="/sharingPage.php">Sharing</a></li>
+					        <li><a href="/12Ride_ROOT/start.php">Start</a></li>
+					        <li><a href="/12Ride_ROOT/sharingPage.php">Sharing</a></li>
 					        <li class="dropdown">
 					          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Detail <span class="caret"></span></a>
 					          <ul class="dropdown-menu">
@@ -162,7 +162,7 @@ A;
 				  
 				  
 				  <label>验证码：<input name="vcode" name="vocode" type="text"  /><span>*请输入下方验证码</span></label>
-			<img class="vcode" src="/resources/images/yanzheng.JPG" />
+			<img class="vcode" src="/12Ride_ROOT/resources/images/yanzheng.JPG" />
 				  <div>&nbsp;</div>
 				  
 				  <button onclick="show_confirm()" type="submit" style="display:inline;" class="btn btn-lg btn-info ">Pay</button>
