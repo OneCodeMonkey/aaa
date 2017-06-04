@@ -29,24 +29,26 @@
 
 		<!-- 点击弹窗 -->
 		<script>
-			function show_confirm2(){
-				var r=confirm("Are sure to share the Car ?");
+			function show_confirm(){
+				var r=confirm("Are sure to rent the Car ?");
 				if (r==true)
 				  {
-				  alert("Congratulations! You can shared your car!");
-				  self.location='/bochs/webROOT/start.php'; 
+				  alert("Congratulations! You can use the car now!");
+				  //self.location='http://42.159.133.122:8082/azure/boschxdk27/1';
+				  self.location='/bochs/webROOT/admin/index.php'; 
 				  }
 				else
 				  {
-				  alert("You have canceled the sharing! ");
-				  self.location='/bochs/webROOT/index.php';
+				  alert("You have canceled the renting! See more cars which can be used! ");
+				  self.location='/bochs/webROOT/start.php';
 				  }
 			}
-			function show_confirm(){
+			function show_confirm2(){
 				var r=confirm("Do you Allow us to get your location ?");
 				if (r==true)
 				  {
 				  alert("Congratulations! Your Position has been renewed!");
+				  self
 				  self.location='/bochs/webROOT/index.php'; 
 				  }
 				else
@@ -62,6 +64,15 @@
 		?>
 	</head>
 	<body>	
+	    <?php 
+			$html=<<<A
+			<script>
+				window.open("http://42.159.133.122:8082/azure/boschxdk27/1");
+			</script>
+A;
+			echo $html;		
+			//echo 'aa';		
+		?>	
 		<div class="container-fluid">
 			<div class="row">
 				
@@ -112,7 +123,7 @@
 					        <button type="submit" class="btn btn-default">Submit</button>
 					      </form>
 					      <ul class="nav navbar-nav navbar-right">
-					        <li><a href="" onclick="show_confirm()">Relocate</a></li>
+					        <li><a href="" onclick="show_confirm2()">Relocate</a></li>
 					        <li class="dropdown">
 					          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
 					          <ul class="dropdown-menu">
@@ -136,29 +147,25 @@
 			  <div class="col-xs-9 col-sm-9 col-md-9 col-xs-offset-1 col-sm-offset-1 col-md-offset-1"
 				<form>
 				  <div class="form-group">
-				    <label for="exampleInputEmail1">Your Name</label>
-				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Your Name">
+				    <label for="exampleInputEmail1">Your Phone Number</label>
+				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Your Phone Number for attach you.">
 				  </div>
 				  <div class="form-group">
-				    <label for="exampleInputPassword1">Password</label>
-				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				    <label for="exampleInputPassword1">Payment Password</label>
+				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Payment Password">
 				  </div>
 				  <div class="form-group">
-				    <label for="exampleInputPassword1">Confirm Password</label>
-				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Please input the password again">
+				    <label for="exampleInputPassword1">Expected Miliege</label>
+				    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Expected Miliege">
 				  </div>
 
-				  <div class="form-group">
-				    <label for="exampleInputFile">Upload your car photo</label>
-				    <input type="file" id="exampleInputFile">
-				    <p class="help-block">The car photo will help identifying your car.</p>
-				  </div>
+				  
 				  
 				  <label>验证码：<input name="vcode" name="vocode" type="text"  /><span>*请输入下方验证码</span></label>
 			<img class="vcode" src="/bochs/webROOT/resources/images/yanzheng.JPG" />
 				  <div>&nbsp;</div>
 				  
-				  <button onclick="show_confirm2()" type="submit" style="display:inline;" class="btn btn-lg btn-info ">Sharing</button>
+				  <button onclick="show_confirm()" type="submit" style="display:inline;" class="btn btn-lg btn-info ">Pay</button>
 				</form>
 			</div>
 		</div>

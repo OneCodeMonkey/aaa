@@ -42,7 +42,9 @@
 	
 </head>
 <body class="page-body">
-	<?php include 'inc/request.php';  //引入天气请求类
+	<?php 
+	    include 'inc/request.php';  //引入天气请求类
+		include 'inc/request2.php';
 		header('Content-type:text/html;charset=utf-8');
 		// $carData = new carData();
 		// $result=$carData->__request();
@@ -173,11 +175,11 @@
 					
 					<!-- logo -->
 					<div class="logo">
-						<a href="dashboard-1.html" class="logo-expanded">
+						<a href="/bochs/webROOT/index.php" class="logo-expanded">
 							<img src="assets/images/logo@2x.png" width="80" alt="" />
 						</a>
 						
-						<a href="dashboard-1.html" class="logo-collapsed">
+						<a href="/bochs/webROOT/index.php" class="logo-collapsed">
 							<img src="assets/images/logo-collapsed@2x.png" width="40" alt="" />
 						</a>
 					</div>
@@ -1554,7 +1556,7 @@
 							prefix : '' ,
 							suffix : 'KM/H' 
 						},
-						cntr = new countUp($el[0], 0, <?php $carData = new carData();$result=$carData->__request(); $speedFloat=$result['noiselevel']; echo $speedFloat;?>, 2, 1.5, options);
+						cntr = new countUp($el[0], 0, <?php $carData = new carData();$result=$carData->__request(); $speedFloat=$result['noiselevel']/1000; echo $speedFloat;?>, 2, 1.5, options);
 						
 					cntr.start();
 				}
@@ -1576,12 +1578,10 @@
 						</div>
 						<div class="xe-label">
 							<strong class="num"><?php 
-								$carData = new carData();
-								$result=$carData->__request();
-								$speedFloat=$result['noiselevel'];
-								echo $speedFloat;
+								$carID="沪A88888";$username="小强";
+								echo $carID.' / '.$username;
 								?></strong>
-							<span>Now Speed</span>
+							<span>Car Id/User</span>
 						</div>
 					</div>
 					
@@ -1592,14 +1592,21 @@
 						<div class="xe-label">
 							<strong class="num">
 							<?php 
-							$carData = new carData();
-							$result=$carData->__request();
-							$Condition="Unused";
-							if($speedFloat>=30 and $speedFloat<=60)
-								$Condition="Well";
-							else if($speedFloat>60)
-								$Condition="Overspeed";
-							 echo $Condition; ?>
+							$carData2 = new carData2();
+							$result2=$carData2->__request();
+							$Condition=$result2['millilux'];
+							
+							$annouce="No user / Well";
+							
+							if($Condition==2)
+								$annouce="Face Matched / Well";
+							else if($Condition==3 or $Condition==4)
+								$annouce="Face Matched / Well";
+							else{
+								$annouce="Not Matched / Well";
+							}
+							 echo $annouce; ?>
+							
 							</strong>
 							<span>Car Condition</span>
 						</div>
@@ -1614,8 +1621,17 @@
 							<?php 
 							$carData = new carData();
 							$result=$carData->__request();
-							//$direction=$result['direction'];
-							$direction="东南(南偏北19°)"; echo $direction; ?></strong>
+							$direction=$result['millilux'];
+							if($direction>=0 and $direction<=90){
+								$result='南偏东'.$direction.'度';
+							}else if($direction>90 and $direction<=180){
+								$result='北偏东'.(180-$direction).'度';
+							}else if($direction>180 and $direction<=270){
+								$result='北偏西'.($direction-180).'度';
+							}else{
+								$result='南偏西'.(360-$direction).'度';
+							}
+							echo $result; ?></strong>
 							<span>Direction</span>
 						</div>
 					</div>
@@ -1639,14 +1655,14 @@
 					     var myCharts1 = echarts.init(document.getElementById('zhexian'));
 					     var option1 = {
 					    title : {
-					        text: 'Speed Statistics',
+					        text: 'Millege Statistics',
 					        subtext: 'Collect Per Hour'
 					    },
 					    tooltip : {
 					        trigger: 'axis'
 					    },
 					    legend: {
-					        data:['速度',]
+					        data:['Millege',]
 					    },
 					    toolbox: {
 					        show : true,
@@ -1663,22 +1679,22 @@
 					        {
 					            type : 'category',
 					            boundaryGap : false,
-					            data : ['0','5','10','15','20','25','30','35','40','45','50','55','60']
+					            data : ['0','10','20','30','40','50','60','70','80','90','100','110','120']
 					        }
 					    ],
 					    yAxis : [
 					        {
 					            type : 'value',
 					            axisLabel : {
-					                formatter: '{value} km/h'
+					                formatter: '{value} km'
 					            }
 					        }
 					    ],
 					    series : [
 					        {
-					            name:'Speed',
+					            name:'Millege',
 					            type:'line',
-					            data:[0, 1, 5, 15,25, 35, 45, 55, 60,65,75,60,40],
+					            data:[0, 100, 500, 1500,2000, 3000, 4500, 5000, 5500,6000,6500,7000,7500],
 					            markPoint : {
 					                data : [
 					                    {type : 'max', name: '最大值'},
@@ -1704,7 +1720,8 @@
 							  <?php $carData = new carData();
 									$result=$carData->__request();
 								    $temperature=$result['temperature']; 
-								    echo $temperature;?>
+								    echo $temperature;
+							  ?>
 							</div>
 							<span class="text-small text-upper text-muted">Current Temperature</span>
 						</div>
@@ -1763,15 +1780,65 @@
 
 					
 
-					<!-- map -->
-					<script type="text/javascript"> 
-						var map = new BMap.Map("container01");          // 创建地图实例  
-						var point = new BMap.Point(121.322565,31.201673);  // 创建点坐标  
-						map.centerAndZoom(point, 16);                 // 初始化地图，设置中心点坐标和地图级别  
-						var marker = new BMap.Marker(point);        // 创建标注    
-						map.addOverlay(marker);                     // 将标注添加到地图中
+					<script type="text/javascript">  
+				        var map;  
+				        function initialize(){  
+				            map=new BMap.Map("container01");  
+				            var point=new BMap.Point(121.322565,31.201673);  
+				            map.centerAndZoom(point,16);  
+				            map.addControl(new BMap.NavigationControl());  
+				            map.addControl(new BMap.ScaleControl());  
+				            map.addControl(new BMap.OverviewMapControl());  
+				            map.addControl(new BMap.MapTypeControl());  
+				            //创建标注  
+				            //var marker=new BMap.Marker(point);  
+				            //map.addOverlay(marker);  
+				            var bounds=map.getBounds();  
+				            var lngSpan=bounds.maxX-bounds.minX;  
+				            var latSpan=bounds.maxY-bounds.minY;  
+				            var gpsdatas = beaches.split("||");  
+				            //alert(gpsdatas.length);  
+				            for(var i=0;i<gpsdatas.length;i++){  
+				                var beach = gpsdatas[i].split("`");  
+				                var point=new BMap.Point(beach[1],beach[0]);  
+				                addMarker(point,i);  
+				            }  
+				        }  
+				        var beaches = "31.201673`121.322565||31.2012`121.3202||31.2004`121.3202||31.2013`121.3192||31.2022`121.3206||31.2033`121.3205||31.2022`121.3216||31.20223`121.3226||31.20005`121.3216||31.2021`121.3206";  
+				        var opts={  
+				            width:354,//信息窗口宽度
+				            height:340,//信息窗口高度  
+				            title:"Car Infomation:"//信息窗口标题  
 
-					</script>  		
+				        }  
+				        //编写自定义函数，创建标注  
+				        function addMarker(point,index){  
+				            //创建图标对象  
+				            var myIcon=new BMap.Icon("../car.jpg",new BMap.Size(50,68)); 
+				            //指定定位位置。  
+				            //当标注显示在地图上时，其所指向的地理位置距离图标左上  
+				            //角各偏移10像素和25像素。您可以看到在本例中该位置即是  
+				            //图标中央下端的尖角位置。  
+				            //offset:new BMap.Size(10,25),  
+				              //设置图片偏移。  
+				              //当您需要从一幅较大的图片中截取某部分作为标注图标时，您  
+				              //需要指定大图的偏移位置，此做法与css sprites技术类似。  
+				             // imageOffset:new BMap.Size(0,0-index*25)//设置图片偏移  
+				            //});  
+				            //创建标注对象并添加到地图,{icon:myIcon}  
+				              
+				            var infoWindow=new BMap.InfoWindow("<strong>Car ID: 沪A88888</strong><br><strong>Car Type:normal</strong><br><strong>Mileage : 90000Km</strong><br><strong style=\"color:red\">Rent Price:￥50/time</strong><br><strong>Comment of Owner: \"Please keep clean,guys!\"</strong><br><strong style=\"color:green\">Take a look:</strong><img src=\"../car2.jpg\"><br><button onclick=\"jumpToRent()\" style=\"position:relative;left:130px;top:10px;\" class=\"btn btn-success\">Rent it Now!</button>",opts);//创建信息窗口对象  
+				            var marker=new BMap.Marker(point,{icon:myIcon});  
+				                map.addOverlay(marker);  
+				                marker.addEventListener("click",function(){  
+				                   map.openInfoWindow(infoWindow,point);//打开信息窗口  
+				            });  
+				        }  
+				        initialize();
+				        var point=new BMap.Point(121.322565,31.201673);
+				        addMarker(point,2);
+					</script> 	
+  		
 					<!-- <div class="chart-item-bg">
 						<div id="pageviews-stats" style="height: 320px; padding: 20px 0;"></div>
 						

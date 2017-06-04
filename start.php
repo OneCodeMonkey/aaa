@@ -31,12 +31,15 @@
 				if (r==true)
 				  {
 				  alert("Congratulations! Your Position has been renewed!");
-				  self.location='/bochs/webROOT/index.php'; 
+				  self.location='index.php'; 
 				  }
 				else
 				  {
-				  self.location='/bochs/webROOT/index.php';
+				  self.location='index.php';
 				  }
+			}
+			function jumpToRent(){
+				self.location='rent.php'; 
 			}
 		</script>
 		
@@ -111,26 +114,79 @@
 			</div>
 		</div>
 		<!--button-->
-		<!-- <div class="container">
+		<!--<div class="container">
 			<div class="row" id="app01">
 				<div class="col-xs-5 col-sm-1 col-md-1  col-md-offset-1 col-sm-offset-1 col-xs-offset-1"><button type="button" class="btn btn-info btn-lg">Sharing</button></div>
 				<div class="col-xs-5 col-sm-1 col-md-1 col-md-offset-7 col-sm-offset-7 "><button onclick="show_confirm()" type="button" class="btn btn-info btn-lg">Relocation</button></div>
 			</div>
-		</div> -->
+		</div>-->
 
 		<!-- map -->		
 		<div class="container-fluid" id="app01">
-			<div id="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					
-					<a href="/bochs/webROOT/start.php"><img src="resources/images/background.png" style="width:100%;height:100%;position:relative;top:-18px;"></a>
-				</div>
-
-			</div>
+			<div id="container"></div>
 		</div>
 
 		
-			
+		<script type="text/javascript">  
+	        var map;  
+	        function initialize(){  
+	            map=new BMap.Map("container");  
+	            var point=new BMap.Point(121.322565,31.201673);  
+	            map.centerAndZoom(point,16);  
+	            map.addControl(new BMap.NavigationControl());  
+	            map.addControl(new BMap.ScaleControl());  
+	            map.addControl(new BMap.OverviewMapControl());  
+	            map.addControl(new BMap.MapTypeControl());  
+	            //创建标注  
+	            //var marker=new BMap.Marker(point);  
+	            //map.addOverlay(marker);  
+	            var bounds=map.getBounds();  
+	            var lngSpan=bounds.maxX-bounds.minX;  
+	            var latSpan=bounds.maxY-bounds.minY;  
+	            var gpsdatas = beaches.split("||");  
+	            //alert(gpsdatas.length);  
+	            for(var i=0;i<gpsdatas.length;i++){  
+	                var beach = gpsdatas[i].split("`");  
+	                var point=new BMap.Point(beach[1],beach[0]);  
+	                addMarker(point,i);  
+	            }  
+	        }  
+	        var beaches = "31.201673`121.322565||31.2012`121.3202||31.2004`121.3202||31.2013`121.3192||31.2022`121.3206||31.2033`121.3205||31.2022`121.3216||31.20223`121.3226||31.20005`121.3216||31.2021`121.3206";  
+	        var opts={  
+	            width:354,//信息窗口宽度
+	            height:340,//信息窗口高度  
+	            title:"Car Infomation:"//信息窗口标题  
+
+	        }  
+	        //编写自定义函数，创建标注  
+	        function addMarker(point,index){  
+	            //创建图标对象  
+	            var myIcon=new BMap.Icon("car.jpg",new BMap.Size(50,68)); 
+	            //指定定位位置。  
+	            //当标注显示在地图上时，其所指向的地理位置距离图标左上  
+	            //角各偏移10像素和25像素。您可以看到在本例中该位置即是  
+	            //图标中央下端的尖角位置。  
+	            //offset:new BMap.Size(10,25),  
+	              //设置图片偏移。  
+	              //当您需要从一幅较大的图片中截取某部分作为标注图标时，您  
+	              //需要指定大图的偏移位置，此做法与css sprites技术类似。  
+	             // imageOffset:new BMap.Size(0,0-index*25)//设置图片偏移  
+	            //});  
+	            //创建标注对象并添加到地图,{icon:myIcon}  
+	              
+	            var infoWindow=new BMap.InfoWindow("<strong>Car ID: 沪A88888</strong><br><strong>Car Type:normal</strong><br><strong>Mileage : 90000Km</strong><br><strong style=\"color:red\">Rent Price:￥50/time</strong><br><strong>Comment of Owner: \"Please keep clean,guys!\"</strong><br><strong style=\"color:green\">Take a look:</strong><img src=\"car2.jpg\"><br><button onclick=\"jumpToRent()\" style=\"position:relative;left:130px;top:10px;\" class=\"btn btn-success\">Rent it Now!</button>",opts);//创建信息窗口对象  
+	            var marker=new BMap.Marker(point,{icon:myIcon});  
+	                map.addOverlay(marker);  
+	                marker.addEventListener("click",function(){  
+	                   map.openInfoWindow(infoWindow,point);//打开信息窗口  
+	            });  
+	        }  
+	        initialize();
+	        var point=new BMap.Point(121.322565,31.201673);
+	        addMarker(point,2);
+		</script> 	
+
+		<!-- -->
 
 		<!-- map -->
 		<!--<script type="text/javascript"> 

@@ -25,36 +25,18 @@
 				position:relative;
 				top:-20px;
 			}
-		</style>
 
+		</style>
 		<!-- 点击弹窗 -->
 		<script>
 			function show_confirm2(){
-				var r=confirm("Are sure to share the Car ?");
-				if (r==true)
-				  {
-				  alert("Congratulations! You can shared your car!");
-				  self.location='/bochs/webROOT/start.php'; 
-				  }
-				else
-				  {
-				  alert("You have canceled the sharing! ");
-				  self.location='/bochs/webROOT/index.php';
-				  }
+				
+				alert("Congratulations! You have registed,start your sharing trip now!");
+				self.location='/bochs/webROOT/start.php';
+				
 			}
-			function show_confirm(){
-				var r=confirm("Do you Allow us to get your location ?");
-				if (r==true)
-				  {
-				  alert("Congratulations! Your Position has been renewed!");
-				  self.location='/bochs/webROOT/index.php'; 
-				  }
-				else
-				  {
-				  self.location='/bochs/webROOT/index.php';
-				  }
-			}
-		</script>
+		</script>	
+
 		<?php 
 		include_once 'inc/config.inc.php';
 			include_once 'inc/mysql.inc.php';
@@ -155,10 +137,9 @@
 				  </div>
 				  
 				  <label>验证码：<input name="vcode" name="vocode" type="text"  /><span>*请输入下方验证码</span></label>
-			<img class="vcode" src="/bochs/webROOT/resources/images/yanzheng.JPG" />
-				  <div>&nbsp;</div>
-				  
-				  <button onclick="show_confirm2()" type="submit" style="display:inline;" class="btn btn-lg btn-info ">Sharing</button>
+			<img class="vcode" src="show_code.php" />
+
+				  <button type="submit" style="margin-left:40%;"class="btn btn-lg btn-info ">Submit</button>
 				</form>
 			</div>
 		</div>
