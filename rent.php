@@ -64,15 +64,7 @@
 		?>
 	</head>
 	<body>	
-	    <?php 
-			$html=<<<A
-			<script>
-				window.open("http://42.159.133.122:8082/azure/boschxdk27/1");
-			</script>
-A;
-			echo $html;		
-			//echo 'aa';		
-		?>	
+	    
 		<div class="container-fluid">
 			<div class="row">
 				
